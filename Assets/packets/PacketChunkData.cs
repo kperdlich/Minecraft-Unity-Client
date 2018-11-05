@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.IO;
 
@@ -17,7 +18,35 @@ public class PacketChunkData : Packet
 
     public override void Action(BinaryWriter writer)
     {
-        base.Action(writer);
+        var uncompressedData = Zlib.Decompress(compressedData);
+        if (GetCalculatedUncompressedDataSize() != uncompressedData.Length)
+            Debug.LogError("Uncompressed size != calculated size!");
+        
+        for (int i = 0; i < 16; ++i)
+        {
+            var chunk = ChunkManager.Get().GetChunk(new Vector3(x, i * 16, z));
+            if ((primaryBitMap & 1 << i) != 0)
+            {
+                for (int ix = 0; ix < 16; ++ix)
+                {
+                    for (int iy = 0; iy < 16; ++iy)
+                    {
+                        for (int iz = 0; iz < 16; ++iz)
+                        {
+                            chunk.SetBlock(ix, iy, iz, uncompressedData[GetUncompressedDataIndex(i, ix, iy, iz)]);
+                        }
+                    }
+                }
+            }
+            chunk.Loaded = true;
+        }
+
+        ChunkManager.ChunkCounter++;
+    }
+
+    private static int GetUncompressedDataIndex(int section, int x, int y, int z)
+    {
+        return (z * 16 * 16) + ((y*section) * 16) + x;
     }
 
     public override Packet Read(BinaryReader reader)
@@ -31,5 +60,17 @@ public class PacketChunkData : Packet
         unusedInt = reader.ReadInt32();
         compressedData = reader.ReadBytes(compressedSize);
         return base.Read(reader);
+    }
+
+    private int GetCalculatedUncompressedDataSize()
+    {
+        int sections = 0;
+        const int sectionSize = 4096 + (3 * 2048);
+        for (int i = 0; i < 16; ++i)
+            sections += primaryBitMap >> i & 1;
+        int size = sections * sectionSize;
+        if (groundUpContinuous)
+            size += 256;
+        return size;
     }
 }

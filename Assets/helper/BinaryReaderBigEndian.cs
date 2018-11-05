@@ -33,12 +33,19 @@ public class BinaryReaderBigEndian : BinaryReader
         var data = base.ReadBytes(4);
         Array.Reverse(data);
         return BitConverter.ToUInt32(data, 0);
-    }    
+    }
+
+    public override UInt16 ReadUInt16()
+    {
+        var data = base.ReadBytes(2);
+        Array.Reverse(data);
+        return BitConverter.ToUInt16(data, 0);
+    }
 
     public override string ReadString()
     {
         var strLen = ReadInt16();
-        var str = ReadBytes(strLen*2); // utf-16        
+        var str = base.ReadBytes(strLen*2); // utf-16        
         return Encoding.Unicode.GetString(Encoding.Convert(Encoding.BigEndianUnicode, Encoding.Unicode, str));        
     }
 
@@ -54,5 +61,5 @@ public class BinaryReaderBigEndian : BinaryReader
         var data = base.ReadBytes(8);
         Array.Reverse(data);
         return BitConverter.ToDouble(data, 0);
-    }
+    }   
 }

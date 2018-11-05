@@ -12,6 +12,18 @@ public class PacketChunkAllocation : Packet
     {
     }
 
+    public override void Action(BinaryWriter writer)
+    {   
+        if (mode)
+        {
+            ChunkManager.Get().CreateChunkColumn(new Vector2(x, z));
+        }
+        else
+        {
+            ChunkManager.Get().GetChunk(new Vector2(x, z)).Unload();
+        }
+    }
+
     public override Packet Read(BinaryReader reader)
     {
         x = reader.ReadInt32();
