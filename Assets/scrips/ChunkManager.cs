@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ChunkManager : MonoBehaviour
 {
-    public static int ChunkCounter = 0;
+    public static int LoadedChunks { get; set; }
     private static ChunkManager instance;
     private Dictionary<Vector2, ChunkColumn> map;
 
@@ -20,7 +20,7 @@ public class ChunkManager : MonoBehaviour
         ChunkColumn cc;
         if (map.TryGetValue(new Vector2(pos.x, pos.z), out cc))
         {
-            return cc.chunks[(int) pos.y / 16];                        
+            return cc.Chunks[(int) pos.y / 16];                        
         }
         return null;
     }

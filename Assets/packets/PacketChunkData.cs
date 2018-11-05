@@ -41,7 +41,7 @@ public class PacketChunkData : Packet
             chunk.Loaded = true;
         }
 
-        ChunkManager.ChunkCounter++;
+        ChunkManager.LoadedChunks++;
     }
 
     private static int GetUncompressedDataIndex(int section, int x, int y, int z)

@@ -4,10 +4,16 @@ using System.Collections.Generic;
 
 public class ChunkColumn : MonoBehaviour {
 
-    [SerializeField] public bool Render = false;
-    public Vector2 position;
-    public List<Chunk> chunks;
+    [SerializeField]
+    private bool Render = true;
 
+    private Vector2 position;
+
+    private List<Chunk> chunks;
+    public List<Chunk> Chunks
+    {
+        get { return chunks; }
+    }
 
     void FixedUpdate()
     {
@@ -30,7 +36,7 @@ public class ChunkColumn : MonoBehaviour {
     }
 
     public ChunkColumn Create(Vector2 pos)
-    { 
+    {
         position = pos;
         chunks = new List<Chunk>();
         transform.position = new Vector3(pos.x * 16.0f, 256, pos.y * 16.0f);
