@@ -45,7 +45,7 @@ public class PacketChunkData : Packet
 
     private static int GetUncompressedDataIndex(int section, int x, int y, int z)
     {
-        return (z * 16 * 16) + (y * 16) + x + (section * 16);
+        return (z * 16 * 16) + (y * 16) + x + (section * 16 * 16 * 16);
     }
 
     public override Packet Read(BinaryReader reader)
