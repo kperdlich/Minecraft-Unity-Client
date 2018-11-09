@@ -20,7 +20,12 @@ public class PacketChunkAllocation : Packet
         }
         else
         {
-            ChunkManager.Get().GetChunk(new Vector2(x, z)).Unload();
+            var c = ChunkManager.Get().GetChunk(new Vector2(x, z));
+            if (c == null)
+            {
+               Debug.LogWarning("Packet: 0x32 - Couldn't find chunk: " + new Vector2(x, z).ToString());
+            }
+
         }
     }
 

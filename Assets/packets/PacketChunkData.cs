@@ -25,7 +25,7 @@ public class PacketChunkData : Packet
         for (int i = 0; i < 16; ++i)
         {
             var chunk = ChunkManager.Get().GetChunk(new Vector3(x, i * 16, z));
-            if ((primaryBitMap & 1 << i) != 0)
+            if ((primaryBitMap & (1 << i)) != 0)
             {
                 for (int ix = 0; ix < 16; ++ix)
                 {
@@ -40,7 +40,6 @@ public class PacketChunkData : Packet
             }
             chunk.Loaded = true;
         }
-
         ChunkManager.LoadedChunks++;
     }
 

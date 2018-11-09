@@ -7,20 +7,21 @@ using System.Threading;
 
 public class MinecraftTcpConnection : MonoBehaviour
 {
-    public static bool playerSpawned = false;
+    public GameObject player;
+
+    public static MinecraftTcpConnection Instance;
+
     private static readonly string serverIP = "localhost";
     private static readonly int serverPort = 25565;
     private TcpClient tcpClient = null;
-    private BinaryReader socketReader = null;
-    private BinaryWriter socketWriter = null;
+    public BinaryReader socketReader = null;
+    public BinaryWriter socketWriter = null;
     private PacketMap packetMap = null;
     private bool stopReading = false;
 
-    public Action<Packet> onPacketReceived;
-
-
     void Start()
     {
+        Instance = this;
         Connect();
     }
 
@@ -49,14 +50,6 @@ public class MinecraftTcpConnection : MonoBehaviour
     private void Update()
     {
         ReadPackets();        
-    }
-
-    private void FixedUpdate()
-    {
-        if (playerSpawned)
-        {
-            new PacketPlayer().Send(socketWriter);            
-        }
     }
     
     private void ReadPackets()

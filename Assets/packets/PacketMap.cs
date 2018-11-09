@@ -26,7 +26,15 @@ public class PacketMap
         map[PacketUpdateHealth.ID] = new PacketUpdateHealth();
         map[PacketSetExperience.ID] = new PacketSetExperience();
         map[PacketChunkData.ID] = new PacketChunkData();
-        map[PacketUpdateTileEntity.ID] = new PacketUpdateTileEntity();        
+        map[PacketUpdateTileEntity.ID] = new PacketUpdateTileEntity();
+        map[PacketPlayerPosition.ID] = new PacketPlayerPosition();
+        map[PacketBlockChange.ID] = new PacketBlockChange();
+        map[PacketMultiBlockChange.ID] = new PacketMultiBlockChange();
+        map[PacketBlockAction.ID] = new PacketBlockAction();
+        map[PacketSpawnNamedEntity.ID] = new PacketSpawnNamedEntity();
+        map[PacketEntityEquipment.ID] = new PacketEntityEquipment();
+        map[PacketSpawnDroppedItem.ID] = new PacketSpawnDroppedItem();
+        map[PacketEntityVelocity.ID] = new PacketEntityVelocity();
     }
 
     public Packet Get(byte id)

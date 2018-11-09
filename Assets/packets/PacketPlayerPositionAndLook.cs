@@ -5,9 +5,9 @@ using System.IO;
 public class PacketPlayerPositionAndLook : Packet
 {
     public static readonly byte ID = 0x0D;
-    private double x = .0, y = .0, stance = .0, z = .0;
-    private float yaw = .0f, pitch = .0f;
-    private bool onGround = false;
+    public double x = .0, y = .0, stance = .0, z = .0;
+    public float yaw = .0f, pitch = .0f;
+    public bool onGround = false;
 
     public PacketPlayerPositionAndLook() : base(ID)
     {
@@ -15,8 +15,22 @@ public class PacketPlayerPositionAndLook : Packet
 
     public override void Action(BinaryWriter writer)
     {
-        MinecraftTcpConnection.playerSpawned = true;
-        Send(writer);
+        var player = MinecraftTcpConnection.Instance.player.GetComponent<Player>();
+        player.transform.position = new Vector3((float)x, (float)y, (float)z);
+        player.Yaw = yaw;
+        player.Pitch = pitch;
+        player.OnGround = onGround;
+        player.Stance = stance;
+        player.Spawned = true;
+        
+        new PacketPlayerPosition()
+        {
+            onGround = onGround,
+            x = x,
+            y = y,
+            z = z,
+            stance = stance
+        }.Send(writer);
     }
 
     public override Packet Read(BinaryReader reader)
