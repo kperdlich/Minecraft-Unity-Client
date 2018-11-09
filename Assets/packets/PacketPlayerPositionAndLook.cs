@@ -16,9 +16,8 @@ public class PacketPlayerPositionAndLook : Packet
     public override void Action(BinaryWriter writer)
     {
         var player = MinecraftTcpConnection.Instance.player.GetComponent<Player>();
-        player.transform.position = new Vector3((float)x, (float)y, (float)z);
-        player.Yaw = yaw;
-        player.Pitch = pitch;
+        player.transform.position = new Vector3((float)x, (float)y, (float)-z);
+        player.SetCamera(yaw, pitch);
         player.OnGround = onGround;
         player.Stance = stance;
         player.Spawned = true;
@@ -28,7 +27,7 @@ public class PacketPlayerPositionAndLook : Packet
             onGround = onGround,
             x = x,
             y = y,
-            z = z,
+            z = z *-1,
             stance = stance
         }.Send(writer);
     }

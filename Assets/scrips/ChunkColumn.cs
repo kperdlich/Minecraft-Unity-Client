@@ -39,7 +39,7 @@ public class ChunkColumn : MonoBehaviour {
     {
         position = pos;
         chunks = new List<Chunk>();
-        transform.position = new Vector3(pos.x * 16.0f, 256, pos.y * 16.0f);
+        transform.position = new Vector3(pos.x * 16.0f, 0, pos.y * -16.0f);
         name = "ChunkColumn:" + transform.position.ToString();
 
         for (int i = 0; i < 16; ++i)
@@ -50,6 +50,7 @@ public class ChunkColumn : MonoBehaviour {
             c.transform.position = new Vector3(transform.position.x, i * 16.0f, transform.position.z);
             chunks.Add(c.Create());
         }
+        
         return this;
     }	
 }

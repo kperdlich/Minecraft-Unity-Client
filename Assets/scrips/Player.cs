@@ -28,9 +28,16 @@ public class Player : MonoBehaviour
                 onGround = OnGround,
                 x = transform.position.x,
                 y = transform.position.y,
-                z = transform.position.z,
+                z = transform.position.z * -1,
                 stance = Stance
             }.Send(ServerConnection.socketWriter);
         }
+    }
+
+    public void SetCamera(float yaw, float pitch)
+    {
+        this.Yaw = yaw;
+        this.Pitch = pitch;
+        transform.rotation = Quaternion.Euler(0, pitch, yaw);
     }
 }

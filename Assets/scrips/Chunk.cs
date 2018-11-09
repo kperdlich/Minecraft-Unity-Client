@@ -33,7 +33,7 @@ public class Chunk : MonoBehaviour
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshRenderer.material = Resources.Load("materials/BlockMaterial", typeof(Material)) as Material;
-
+        transform.rotation = Quaternion.Euler(270f, 0f, 0f);
         name = "Chunk:" + transform.position.ToString();
         return this;
     }
@@ -226,8 +226,8 @@ public class Chunk : MonoBehaviour
         Color c;
         switch (blockId)
         {
-            case 1:
-                c = new Color(218.0f, 218.0f, 218.0f); // STONE
+            case 4:
+                c = new Color(190f, 190f, 190f); // STONE
                 break;
             case 2:
                 c = new Color(92.0f, 141.0f, 94.0f); // GRASS
@@ -235,8 +235,17 @@ public class Chunk : MonoBehaviour
             case 3:
                 c = new Color(150.0f, 102.0f, 0.0f); // DIRT
                 break;
+            case 17:
+                c = new Color(111f, 81f, 0f); // Oak Wood
+                break;
+            case 5:
+                c = new Color(169f, 108f, 0f); // Oak Wood Plank
+                break;
+            case 18:
+                c = new Color(9f, 108f, 0f); // Oak Leaves
+                break;
             default:
-                c = new Color(255.0f, 255.0f, 255.0f);
+                c = new Color(255.0f, 134.0f, 255.0f);
                 break;
         }
 
